@@ -7,12 +7,12 @@ const bgPopup = document.querySelector('.background-for-window');
 const addBlockProducts = document.querySelector('.window-order');
 const closeCart = document.querySelector('.close-img-bg');
 
-// const titlePopup = document.createElement('h3');
-// titlePopup.innerText = 'Ваше замовлення';
-// addBlockProducts.append(titlePopup);
+const titlePopup = document.createElement('h3');
+titlePopup.innerText = 'Ваше замовлення';
 
 export const renderCart = () => {
     addBlockProducts.innerHTML = '';
+    addBlockProducts.append(titlePopup);
     const formatCart = formatCartData(cart); // беремо новий масив без дублікатів
     const money = ' грн.';
     let sumTotalAddProd = 0;
