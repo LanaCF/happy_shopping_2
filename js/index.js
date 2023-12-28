@@ -1,10 +1,26 @@
 import products from './data/products.js';
 import { renderProduct } from './render/renderProduct.js';
 import { renderCart } from './render/listAddProduct.js';
+import { renderLoginBtn } from './render/renderLoginBtn.js';
+
+renderCart();
+renderLoginBtn();
 
 for (let i = 0; i < products.length; i++) {
     renderProduct('.products', products[i]);
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 // renderProduct('.products', products[0]);
 // renderProduct('.products', products[1]);
