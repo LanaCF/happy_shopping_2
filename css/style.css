@@ -1,0 +1,325 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.header-wrapper {
+  height: 100px;
+  background-color: rgb(33, 70, 86);
+  color: white;
+}
+
+.header-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 1000px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.name-shop {
+  font-weight: bold;
+  font-size: 35px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  margin-right: auto;
+}
+
+.name-shop:hover {
+  cursor: pointer;
+  color: rgb(158, 193, 208);
+  -webkit-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.header-cart-log {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.login {
+  color: rgb(255, 255, 255);
+  font-size: 37px;
+  margin-left: 50px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.login:hover {
+  color: rgb(158, 193, 208);
+  -webkit-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.shopping-cart-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 125px;
+  background-color: rgb(255, 255, 255);
+  padding: 15px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.shopping-cart {
+  width: 50px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.quantity {
+  color: rgb(33, 70, 86);
+  font-size: 21px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.shopping-cart-box:hover .quantity,
+.shopping-cart-box:hover .shopping-cart {
+  cursor: pointer;
+  -webkit-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+          transform: scale(1.2);
+  font-size: 27px;
+}
+
+.container {
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+.main__title {
+  text-align: center;
+  margin: 25px 0;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.bg-popup-window {
+  display: none;
+  background-color: rgba(128, 128, 128, 0.605);
+  width: 100vw;
+  height: 1000px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+}
+
+.popup-window {
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  -webkit-transform: scale(1.3);
+      -ms-transform: scale(1.3);
+          transform: scale(1.3);
+  top: 10%;
+  left: 42%;
+  z-index: 57;
+}
+
+.close-img-bg {
+  width: 25px;
+  position: absolute;
+  top: 50px;
+  right: 100px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.products {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.product {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 15px;
+  width: 230px;
+  border: 1px solid silver;
+  margin: 5px;
+}
+.product__img {
+  width: 100%;
+  height: 200px;
+}
+.product__img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: center;
+     object-position: center;
+  cursor: pointer;
+}
+.product__title {
+  margin-bottom: 15px;
+  font-size: 17px;
+}
+.product__descr {
+  font-size: 12px;
+  color: rgb(160, 160, 160);
+  margin-bottom: 15px;
+}
+.product__price-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.product__price {
+  color: red;
+  font-weight: bold;
+}
+.product__add-to-cart {
+  padding: 5px;
+  border: 1px solid rgba(24, 6, 115, 0.404);
+  border-radius: 5px;
+  background-color: rgb(219, 237, 249);
+  color: rgb(35, 102, 169);
+  cursor: pointer;
+}
+
+.background-for-window {
+  background-color: rgba(25, 27, 31, 0.7294117647);
+  width: 100vw;
+  height: 1000px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: none;
+}
+
+.close-img-bg {
+  width: 25px;
+  position: absolute;
+  top: 50px;
+  right: 100px;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.window-order {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 700px;
+  max-height: 400px;
+  padding: 25px;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  overflow-y: auto;
+}
+
+.product-add-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.product-add-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  border: 1px solid rgba(192, 192, 192, 0.307);
+}
+
+.product-add-icon {
+  width: 50px;
+}
+
+.product-add-title {
+  font-weight: bold;
+  width: 230px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.product-add-quan-sum {
+  font-weight: bold;
+  width: 110px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.product-add-info {
+  padding: 0 30px;
+}
+
+.close-img {
+  width: 15px;
+  margin: 0 15px;
+  cursor: pointer;
+}
+
+.total {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 25px;
+}/*# sourceMappingURL=style.css.map */

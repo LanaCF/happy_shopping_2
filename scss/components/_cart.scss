@@ -1,0 +1,80 @@
+.background-for-window {
+    background-color: #191b1fba;
+    width: 100vw;
+    height: 1000px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: none;
+}
+
+.close-img-bg {
+    width: 25px;
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.window-order {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    width: 700px;
+    max-height: 400px;
+    padding: 25px;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow-y: auto;
+}
+  
+.product-add-block {
+    display: flex;
+}
+
+.product-add-box {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    height: 100px;
+    border: 1px solid rgba(192, 192, 192, 0.307);
+}
+
+.product-add-icon {
+    width: 50px;
+}
+
+.product-add-title {
+    font-weight: bold;
+    width: 230px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.product-add-quan-sum {
+    font-weight: bold;
+    width: 110px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.product-add-info {
+    padding: 0 30px;
+}
+
+.close-img {
+    width: 15px;
+    margin: 0 15px;
+    cursor: pointer;
+}
+
+.total {
+    display: flex;
+    padding-top: 25px;
+}
