@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -159,9 +160,14 @@ h3 {
   cursor: pointer;
 }
 
+.container-admin {
+  max-width: 1370px;
+  height: 100%;
+  margin: 0 auto;
+}
+
 .admin-products {
-  width: 1000px;
-  max-height: 500px;
+  max-width: auto;
   padding: 25px;
 }
 
@@ -170,6 +176,7 @@ h3 {
   display: -ms-flexbox;
   display: flex;
   height: 250px;
+  width: 100%;
 }
 
 .product-admin-box {
@@ -194,7 +201,18 @@ h3 {
 .product-admin-title {
   font-weight: bold;
   width: 150px;
+}
+
+.edit {
+  height: auto;
   text-align: center;
+  font-family: sans-serif;
+  font-size: 17px;
+  border: none;
+  background-color: transparent;
+  resize: none; /* Заборона зміни розміру */
+  border-radius: 0; /* Видалення кутових обводок */
+  outline: none; /* Видалення зовнішнього обведення */
 }
 
 .product-admin-descr-mini {
@@ -220,6 +238,35 @@ h3 {
   display: -ms-flexbox;
   display: flex;
   padding-top: 25px;
+}
+
+.price-icon {
+  width: 110px;
+}
+
+.edit-icon {
+  width: 50px;
+  color: blue;
+  text-align: center;
+  cursor: pointer;
+}
+
+.save-btn-box {
+  border: none;
+  cursor: default;
+}
+
+.save-btn {
+  display: none;
+  padding: 5px;
+  background-color: rgb(185, 218, 235);
+  border: 1px solid rgb(79, 106, 197);
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: rgb(208, 223, 239);
 }
 
 .products {

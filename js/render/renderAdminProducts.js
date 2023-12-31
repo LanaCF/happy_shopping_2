@@ -16,28 +16,73 @@ export const renderAdminProducts = (selector, data) => {
             <div class="product-admin-box">
                 <img src="./img/products/${ imgName }" alt="" class="product-admin-icon">
             </div>
-            <div class="product-admin-box">
-                <p class="product-admin-title">${ title }</p>
+            <div class="product-admin-box" title="Назва товару">
+                <textarea class="product-admin-title edit" cols="20" disabled>${ title }</textarea>
             </div>
-            <div class="product-admin-box">
-                <p class="product-admin-descr-mini">${ descrMini }</p>
+            <div class="product-admin-box" title="Короткий опис товару">
+                <textarea class="product-admin-descr-mini edit" cols="20" disabled>${ descrMini }</textarea>
             </div>
-            <div class="product-admin-box">
-                <p class="product-admin-descr-full">${ descrFull }</p>
+            <div class="product-admin-box" title="Повний опис товару">
+                <textarea class="product-admin-descr-full edit" cols="20" disabled>${ descrFull }</textarea>
             </div>
-            <div class="product-admin-box">
-                <p class="product-add-quan-sum">${ price } ₴</p>
+            <div class="product-admin-box price-icon" title="Ціна товару">
+                <textarea class="product-add-quan-sum edit" cols="20" disabled>${ price } ₴</textarea>
             </div> 
-            <div class="product-admin-box">
+            <div class="product-admin-box" title="Редагувати товар">
+                <i class="fa-solid fa-pen-to-square edit-icon"></i>
+            </div>
+            <div class="product-admin-box" title="Видалити товар">
                 <img src="img/close.png" alt="" class="close-img">
             </div>
-            <div class="product-admin-box">
-                <img src="img/close.png" alt="" class="close-img">
+            <div class="product-admin-box save-btn-box" title="Видалити товар">
+                <button class="save-btn">Зберегти</button>
             </div>
         </div>`;
 
-    parent.insertAdjacentHTML('beforeend', htmlAdmin);
+    parent.insertAdjacentHTML('beforeend', htmlAdmin);    
 }
+
+document.addEventListener('DOMContentLoaded', function() { //Обгортка DOMContentLoaded, щоб переконатися, що код виконується тільки після того, як сторінка повністю завантажена
+    const textareaEl = document.querySelectorAll('textarea');
+
+    textareaEl.forEach((item) => {
+        item.addEventListener('input', autoResize);
+        autoResize.call(item); // Викликаємо функцію при завантаженні сторінки для налаштування початкового розміру.
+    });
+
+    function autoResize() {
+        this.style.height = 'auto'; // Спочатку встановлюємо height в auto для отримання розміру вмісту.
+        this.style.height = this.scrollHeight + 'px'; // Змінюємо height на висоту вмісту.
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const editIcons = document.querySelectorAll('.edit-icon');
+
+    editIcons.forEach(function(editIcon) {
+        editIcon.addEventListener('click', function() {
+            const productAdminBlock = this.closest('.product-admin-block');
+            const saveBtn = productAdminBlock.querySelector('.save-btn');
+            const edit = productAdminBlock.querySelectorAll('.edit');
+            
+            saveBtn.style.display = 'initial';
+
+            edit.forEach(function(textarea) {
+                textarea.removeAttribute('disabled');
+                textarea.style.border = '1px solid silver';
+            });
+
+            saveBtn.addEventListener('click', function() {
+                saveBtn.style.display = 'none';
+    
+                edit.forEach(function(textarea) {
+                    textarea.setAttribute('disabled', true);
+                    textarea.style.border = 'none';
+                });
+            });
+        });
+    });
+});
 
 // function getProductById(productId) {
 //     return products.find(product => product.id === parseInt(productId));
