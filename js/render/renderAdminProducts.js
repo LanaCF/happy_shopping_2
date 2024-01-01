@@ -1,9 +1,7 @@
-import products from '../data/products.js';
+// import products from '../data/products.js';
 
 export const renderAdminProducts = (selector, data) => {
-    getsaveLocalStorageAdmin()
-
-    console.log(products);
+    getsaveLocalStorageAdmin();
 
     const parent = document.querySelector(selector);
     const { id, img, title, descrMini, descrFull, price } = data;
@@ -75,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 editAreas.forEach(function(textarea) {
                     textarea.setAttribute('disabled', true);
                     textarea.style.border = 'none';
+                    const products = getsaveLocalStorageAdmin();
 
                     const productId = parseInt(productAdminBlock.getAttribute('data-id'), 10);
                     const productData = products.find(product => product.id === productId);
@@ -86,7 +85,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         products[index].title = productAdminBlock.querySelector('.product-admin-title').value;
                         products[index].descrMini = productAdminBlock.querySelector('.product-admin-descr-mini').value;
                         products[index].descrFull = productAdminBlock.querySelector('.product-admin-descr-full').value;
-                        products[index].price = productAdminBlock.querySelector('.product-add-quan-sum').value;
+                        const priceV = productAdminBlock.querySelector('.product-add-quan-sum').value;
+						products[index].price = parseInt(priceV.slice(0, priceV.length - 2));
+                        console.log(products[index].price);
                     }
         
                     console.log(products);
@@ -98,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-export const saveLocalStorageAdmin = () => {
+export const saveLocalStorageAdmin = (products) => {
     localStorage.setItem('products', JSON.stringify(products));
 };
 

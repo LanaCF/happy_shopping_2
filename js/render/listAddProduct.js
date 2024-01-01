@@ -1,6 +1,10 @@
-import products from '../data/products.js';
-import { cart, quantity, updateCartQuantity, saveLocalStorage, getLocalStorage } from '../render/renderProduct.js';
+// import products from '../data/products.js';
+import { cart, quantity, updateCartQuantity, saveLocalStorage, getLocalStorage, addToCartHandler } from '../render/renderProduct.js';
+import { getsaveLocalStorageAdmin } from './renderAdminProducts.js';
+
 console.log('123', cart);
+
+const products = getsaveLocalStorageAdmin();
 
 const cartBox = document.querySelector('.shopping-cart-box');
 const bgPopup = document.querySelector('.background-for-window');
@@ -29,6 +33,7 @@ export const renderCart = () => {
         const imgDel = document.createElement('div');
 
         block.className = `product-add-block`;
+        block.setAttribute("id", cartItem.id);
         
         boxImg.className = `product-add-box`;
         boxImg.innerHTML = `<img src="./img/products/${cartItem.img}" alt="" class="product-add-icon">`;
@@ -58,22 +63,38 @@ export const renderCart = () => {
 
         const minQuantity = document.querySelectorAll('.minus-img');
         const maxQuantity = document.querySelectorAll('.plus-img');
+        
+	    for (const minQ of minQuantity) {
+			minQ.addEventListener("click", (event)=> {
+				const productIdMin = parseInt(minQ.closest(".product-add-block").id);
+				const indexToRemoveMin = cart.findIndex(product => product.id === productIdMin);
 
-        console.log('555', minQuantity);
+                console.log('-', productIdMin, ' | ', indexToRemoveMin);
 
-        // minQuantity.onclick = function() {
-        //     const productIdMin = cartItem.id;
-        //     const indexToRemoveMin = cart.findIndex(product => product.id === productIdMin);
+				if (indexToRemoveMin !== -1) {
+					cart.splice(indexToRemoveMin, 1);
+				}
+				
+				updateCartQuantity(cart.length);
+				renderCart();
+				saveLocalStorage();
+            });
+        }
 
-        //     if (indexToRemoveMin !== -1) {
-        //         cart.splice(indexToRemoveMin, 1);
-        //     }
+        for (const maxQ of maxQuantity) {
+			maxQ.addEventListener("click", (event)=> {
+				const productIdMax = parseInt(maxQ.closest(".product-add-block").id);
+				const indexToRemoveMax = cart.findIndex(product => product.id === productIdMax);
 
-        //     updateCartQuantity(cart.length);
-        //     block.remove();
-        //     renderCart();
-        //     saveLocalStorage();
-        // };
+                console.log('+', productIdMax, ' | ', indexToRemoveMax);
+                console.log(cart[indexToRemoveMax]);
+				cart.push(cart[indexToRemoveMax]);
+				
+				updateCartQuantity(cart.length);
+				renderCart();
+				saveLocalStorage();
+            });
+        }
 
         imgDel.onclick = function() {
             const productIdToRemove = cartItem.id;

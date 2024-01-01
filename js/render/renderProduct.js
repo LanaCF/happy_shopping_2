@@ -1,7 +1,7 @@
-import products from '../data/products.js';
+// import products from '../data/products.js';
 import { getsaveLocalStorageAdmin } from './renderAdminProducts.js';
 
-getsaveLocalStorageAdmin();
+const products = getsaveLocalStorageAdmin();
 
 const quantity = document.querySelector('.quantity');
 let cart = [];
@@ -136,4 +136,4 @@ function getLocalStorage() {
 }
 
 
-export { cart, quantity, updateCartQuantity, saveLocalStorage, getLocalStorage };
+export { cart, quantity, updateCartQuantity, saveLocalStorage, getLocalStorage, addToCartHandler };

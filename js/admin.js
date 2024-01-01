@@ -1,6 +1,9 @@
-import products from './data/products.js';
-import { renderAdminProducts } from "./render/renderAdminProducts.js";
+// import products from './data/products.js';
+import { renderAdminProducts, getsaveLocalStorageAdmin, saveLocalStorageAdmin } from "./render/renderAdminProducts.js";
 
-for (let i = 0; i < products.length; i++) {
-    renderAdminProducts('.admin-products', products[i]);
+const productsLocal = getsaveLocalStorageAdmin();
+console.log('In Admin productsLocal:', productsLocal);
+
+for (let i = 0; i < productsLocal.length; i++) {
+    renderAdminProducts('.admin-products', productsLocal[i]);
 }
