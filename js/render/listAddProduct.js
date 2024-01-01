@@ -61,41 +61,6 @@ export const renderCart = () => {
         boxQuantity.append(quantityEl);
         boxSum.append(sum);
 
-        const minQuantity = document.querySelectorAll('.minus-img');
-        const maxQuantity = document.querySelectorAll('.plus-img');
-        
-	    for (const minQ of minQuantity) {
-			minQ.addEventListener("click", (event)=> {
-				const productIdMin = parseInt(minQ.closest(".product-add-block").id);
-				const indexToRemoveMin = cart.findIndex(product => product.id === productIdMin);
-
-                console.log('-', productIdMin, ' | ', indexToRemoveMin);
-
-				if (indexToRemoveMin !== -1) {
-					cart.splice(indexToRemoveMin, 1);
-				}
-				
-				updateCartQuantity(cart.length);
-				renderCart();
-				saveLocalStorage();
-            });
-        }
-
-        for (const maxQ of maxQuantity) {
-			maxQ.addEventListener("click", (event)=> {
-				const productIdMax = parseInt(maxQ.closest(".product-add-block").id);
-				const indexToRemoveMax = cart.findIndex(product => product.id === productIdMax);
-
-                console.log('+', productIdMax, ' | ', indexToRemoveMax);
-                console.log(cart[indexToRemoveMax]);
-				cart.push(cart[indexToRemoveMax]);
-				
-				updateCartQuantity(cart.length);
-				renderCart();
-				saveLocalStorage();
-            });
-        }
-
         imgDel.onclick = function() {
             const productIdToRemove = cartItem.id;
             const quantityToRemove = quantityAddProducts(cart, productIdToRemove);
@@ -115,6 +80,41 @@ export const renderCart = () => {
         };
     
     });
+
+    const minQuantity = document.querySelectorAll('.minus-img');
+    const maxQuantity = document.querySelectorAll('.plus-img');
+    
+    for (const minQ of minQuantity) {
+        minQ.addEventListener("click", (event)=> {
+            const productIdMin = parseInt(minQ.closest(".product-add-block").id);
+            const indexToRemoveMin = cart.findIndex(product => product.id === productIdMin);
+
+            console.log('-', productIdMin, ' | ', indexToRemoveMin);
+
+            if (indexToRemoveMin !== -1) {
+                cart.splice(indexToRemoveMin, 1);
+            }
+            
+            updateCartQuantity(cart.length);
+            renderCart();
+            saveLocalStorage();
+        });
+    }
+
+    for (const maxQ of maxQuantity) {
+        maxQ.addEventListener("click", (event)=> {
+            const productIdMax = parseInt(maxQ.closest(".product-add-block").id);
+            const indexToRemoveMax = cart.findIndex(product => product.id === productIdMax);
+
+            console.log('+', productIdMax, ' | ', indexToRemoveMax);
+            console.log(cart[indexToRemoveMax]);
+            cart.push(cart[indexToRemoveMax]);
+            
+            updateCartQuantity(cart.length);
+            renderCart();
+            saveLocalStorage();
+        });
+    }
     
     const totalBox = document.createElement('div');
     const totalText = document.createElement('h4');
