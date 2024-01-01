@@ -115,7 +115,8 @@ function popupWindow(selector, productId) {
 // localStorage.clear(); // Очищує localStorage, наприклад, від даних попередніх задач
 
 function saveLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(cart));
+    const sortedProducts = cart.sort((a, b) => a.id - b.id);
+    localStorage.setItem('cart', JSON.stringify(sortedProducts));
     localStorage.setItem('cartLength', String(cart.length));  
     // console.log('Data saved:', cart.length);
 }
