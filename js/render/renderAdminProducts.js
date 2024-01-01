@@ -1,18 +1,16 @@
 import products from '../data/products.js';
-// import { updateCartQuantity, saveLocalStorage, getLocalStorage } from './render/renderProduct.js';
-
-// const adminProducts = document.querySelector('.admin-products');
-
-// const savedCartLength = getLocalStorage();
-// quantity.innerHTML = savedCartLength;
 
 export const renderAdminProducts = (selector, data) => {
+    getsaveLocalStorageAdmin()
+
+    console.log(products);
+
     const parent = document.querySelector(selector);
     const { id, img, title, descrMini, descrFull, price } = data;
     const imgName = img ? img : 'noimg.webp';
     
     const htmlAdmin = 
-        `<div class="product-admin-block data-id="${ id }">
+        `<div class="product-admin-block" data-id="${ id }">
             <div class="product-admin-box">
                 <img src="./img/products/${ imgName }" alt="" class="product-admin-icon">
             </div>
@@ -42,7 +40,7 @@ export const renderAdminProducts = (selector, data) => {
     parent.insertAdjacentHTML('beforeend', htmlAdmin);    
 }
 
-document.addEventListener('DOMContentLoaded', function() { //Обгортка DOMContentLoaded, щоб переконатися, що код виконується тільки після того, як сторінка повністю завантажена
+document.addEventListener('DOMContentLoaded', function() {
     const textareaEl = document.querySelectorAll('textarea');
 
     textareaEl.forEach((item) => {
@@ -54,103 +52,77 @@ document.addEventListener('DOMContentLoaded', function() { //Обгортка DO
         this.style.height = 'auto'; // Спочатку встановлюємо height в auto для отримання розміру вмісту.
         this.style.height = this.scrollHeight + 'px'; // Змінюємо height на висоту вмісту.
     }
-});
 
-document.addEventListener('DOMContentLoaded', function() {
     const editIcons = document.querySelectorAll('.edit-icon');
 
     editIcons.forEach(function(editIcon) {
+        
         editIcon.addEventListener('click', function() {
             const productAdminBlock = this.closest('.product-admin-block');
             const saveBtn = productAdminBlock.querySelector('.save-btn');
-            const edit = productAdminBlock.querySelectorAll('.edit');
+            const editAreas = productAdminBlock.querySelectorAll('.edit');  // Оновлено: Змінено назву для уникнення конфлікту імен
             
             saveBtn.style.display = 'initial';
 
-            edit.forEach(function(textarea) {
+            editAreas.forEach(function(textarea) {
                 textarea.removeAttribute('disabled');
                 textarea.style.border = '1px solid silver';
             });
-
+            
             saveBtn.addEventListener('click', function() {
                 saveBtn.style.display = 'none';
-    
-                edit.forEach(function(textarea) {
+
+                editAreas.forEach(function(textarea) {
                     textarea.setAttribute('disabled', true);
                     textarea.style.border = 'none';
+
+                    const productId = parseInt(productAdminBlock.getAttribute('data-id'), 10);
+                    const productData = products.find(product => product.id === productId);
+                    
+                    // Оновити масив products
+                    const index = products.findIndex(item => item.id === productData.id);
+                    
+                    if (index !== -1) {
+                        products[index].title = productAdminBlock.querySelector('.product-admin-title').value;
+                        products[index].descrMini = productAdminBlock.querySelector('.product-admin-descr-mini').value;
+                        products[index].descrFull = productAdminBlock.querySelector('.product-admin-descr-full').value;
+                        products[index].price = productAdminBlock.querySelector('.product-add-quan-sum').value;
+                    }
+        
+                    console.log(products);
+                    saveLocalStorageAdmin(products);
+                    renderAdminProducts('.admin-products', products);
                 });
             });
         });
     });
 });
 
-// function getProductById(productId) {
-//     return products.find(product => product.id === parseInt(productId));
-// }
+export const saveLocalStorageAdmin = () => {
+    localStorage.setItem('products', JSON.stringify(products));
+};
 
-// function updateCartQuantity(newQuantity) {
-//     quantity.innerHTML = newQuantity;
-// }
+export const getsaveLocalStorageAdmin = () => {
+    const getData = localStorage.getItem('products');
+    const parsedData = JSON.parse(getData);
 
-// // localStorage.clear(); // Очищує localStorage, наприклад, від даних попередніх задач
+    return parsedData || [];
+};
 
-// function saveLocalStorage() {
-//     localStorage.setItem('cart', JSON.stringify(cart));
-//     localStorage.setItem('cartLength', String(cart.length));  
-//     // console.log('Data saved:', cart.length);
-// }
-  
-// function getLocalStorage() {
-//     const getData = localStorage.getItem('cart');
-//     const parsedData = JSON.parse(getData);
 
-//     if (parsedData && Array.isArray(parsedData)) {
-//         cart.push(...parsedData);
-//         return parsedData.length;
-//     }
 
-//     return 0;
-//     // const getData = localStorage.getItem('cartLength');    
-//     // console.log('Data loaded:', getData);
-//     // return parseInt(getData) || 0;
-// }
 
-// export { cart, quantity, updateCartQuantity, saveLocalStorage, getLocalStorage };
 
-// cartBox.onclick = function() {
-//     bgPopup.style.display = 'initial';
 
-//     renderCart();
-// }
 
-// closeCart.onclick = function(event) {
-//     event.stopPropagation(); // Зупиняємо подальше розповсюдження події, щоб не викликати bgPopup.onclick
-//     bgPopup.style.display = 'none';
-// }
+// export const saveLocalStorageAdmin = (data) => {
 
-// bgPopup.onclick = function() {
-//     bgPopup.style.display = 'none';
-// }
+//     // Отримати збережені дані з локального сховища
+//     // const storedData = getsaveLocalStorageAdmin();
 
-// addBlockProducts.onclick = function(event) {
-//     event.stopPropagation(); // Зупиняємо подальше розповсюдження події, щоб не викликати bgPopup.onclick
-// }
+//     // // Замінити старі дані на нові в масиві
+//     // const updatedData = storedData.map(item => (item.id === data.id ? data : item));
 
-// function quantityAddProducts(arr, id) { // arr = cart / id = cartItem.id
-//     let sumAdd = 0;
-
-//     arr.forEach(function(item) {
-//         if (item.id === id) {
-//         sumAdd += 1;
-//         }
-//     });
-//     return sumAdd;
-// }
-
-// function formatCartData() {
-//     const formatDataNew = Array.from(new Set(cart.map(product => product.id))); // Set вилучить дублікати з масиву cart
-//     const formatData = formatDataNew.map(productId => {
-//         return products.find(product => product.id === productId);
-//     });
-//     return formatData;
-// }
+//     // Збереження оновлених даних в локальному сховищі
+//     localStorage.setItem('products', JSON.stringify(products));
+// };

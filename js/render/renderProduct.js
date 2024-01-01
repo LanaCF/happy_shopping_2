@@ -1,4 +1,7 @@
 import products from '../data/products.js';
+import { getsaveLocalStorageAdmin } from './renderAdminProducts.js';
+
+getsaveLocalStorageAdmin();
 
 const quantity = document.querySelector('.quantity');
 let cart = [];

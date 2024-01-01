@@ -1,3 +1,7 @@
+// import { saveLocalStorageAdmin, getsaveLocalStorageAdmin } from "../render/renderAdminProducts.js";
+
+// getsaveLocalStorageAdmin();
+
 const products = [
     { 
         id: 1, 
