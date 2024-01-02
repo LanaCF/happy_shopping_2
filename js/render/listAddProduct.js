@@ -132,7 +132,6 @@ export const renderCart = () => {
 
 cartBox.onclick = function() {
     bgPopup.style.display = 'initial';
-
     renderCart();
 }
 

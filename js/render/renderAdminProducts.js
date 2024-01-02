@@ -28,9 +28,9 @@ export const renderAdminProducts = (selector, data) => {
                 <i class="fa-solid fa-pen-to-square edit-icon"></i>
             </div>
             <div class="product-admin-box" title="Видалити товар">
-                <img src="img/close.png" alt="" class="close-img">
+                <img src="img/close.png" alt="" class="del-icon">
             </div>
-            <div class="product-admin-box save-btn-box" title="Видалити товар">
+            <div class="product-admin-box save-btn-box">
                 <button class="save-btn">Зберегти</button>
             </div>
         </div>`;
@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const editIcons = document.querySelectorAll('.edit-icon');
 
     editIcons.forEach(function(editIcon) {
-        
         editIcon.addEventListener('click', function() {
             const productAdminBlock = this.closest('.product-admin-block');
             const saveBtn = productAdminBlock.querySelector('.save-btn');
@@ -87,14 +86,32 @@ document.addEventListener('DOMContentLoaded', function() {
                         products[index].descrFull = productAdminBlock.querySelector('.product-admin-descr-full').value;
                         const priceV = productAdminBlock.querySelector('.product-add-quan-sum').value;
 						products[index].price = parseInt(priceV.slice(0, priceV.length - 2));
-                        console.log(products[index].price);
                     }
         
-                    console.log(products);
                     saveLocalStorageAdmin(products);
                     renderAdminProducts('.admin-products', products);
                 });
             });
+        });
+    });
+
+    const delIcon = document.querySelectorAll('.del-icon');
+
+    delIcon.forEach(function(del) {
+        del.addEventListener('click', function() {
+            const productAdminBlock = this.closest('.product-admin-block');
+            const products = getsaveLocalStorageAdmin();
+            const productIdToDel = parseInt(productAdminBlock.getAttribute('data-id'), 10);
+            const indexToDelete = products.findIndex(product => product.id === productIdToDel);
+
+            console.log('del', products);
+            
+            if (indexToDelete !== -1) {
+                products.splice(indexToDelete, 1);
+            }
+            
+            saveLocalStorageAdmin(products);
+            productAdminBlock.remove();
         });
     });
 });
