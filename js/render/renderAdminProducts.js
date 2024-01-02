@@ -1,4 +1,6 @@
 // import products from '../data/products.js';
+//import { cart, quantity, updateCartQuantity, saveLocalStorage, getLocalStorage, addToCartHandler } from './renderProduct.js';
+//import { quantityAddProducts } from './listAddProduct.js';
 
 export const renderAdminProducts = (selector, data) => {
     getsaveLocalStorageAdmin();
@@ -103,21 +105,101 @@ document.addEventListener('DOMContentLoaded', function() {
             const products = getsaveLocalStorageAdmin();
             const productIdToDel = parseInt(productAdminBlock.getAttribute('data-id'), 10);
             const indexToDelete = products.findIndex(product => product.id === productIdToDel);
+            let sumAdd = 0;
+            let cart = JSON.parse(localStorage.getItem('cart'));
+            cart.forEach(function(item) {
+                if (item.id === productIdToDel) {
+                sumAdd += 1;
+                }
+            });
+            const quantityToRemove = sumAdd;
 
-            console.log('del', products);
-            
+            for (let i = 0; i < quantityToRemove; i++) {
+                const indexToRemove = cart.findIndex(product => product.id === productIdToDel);
+        
+                if (indexToRemove !== -1) {
+                    cart.splice(indexToRemove, 1);
+                }
+            }
+
             if (indexToDelete !== -1) {
                 products.splice(indexToDelete, 1);
             }
-            
+            console.log('del', products);
+            //updateCartQuantity(cart.length);
+            //saveLocalStorage();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('cartLength', String(cart.length));
             saveLocalStorageAdmin(products);
             productAdminBlock.remove();
         });
     });
 });
 
+export const addNewProduct = (selector) => {
+    const parent = document.querySelector(selector);
+    let { id, img, title, descrMini, descrFull, price } = '';
+    
+	const imgName = img ? img : 'noimg.webp';
+    id = parseInt(localStorage.getItem('maxProductId')) + 1;
+	
+    const htmlAdmin = 
+        `<div class="product-admin-block" data-id="${ id }">
+            <div class="product-admin-box">
+                <input type="file">
+            </div>
+            <div class="product-admin-box" title="Назва товару">
+                <textarea class="product-admin-title edit" cols="20" disabled>${ title }</textarea>
+            </div>
+            <div class="product-admin-box" title="Короткий опис товару">
+                <textarea class="product-admin-descr-mini edit" cols="20" disabled>${ descrMini }</textarea>
+            </div>
+            <div class="product-admin-box" title="Повний опис товару">
+                <textarea class="product-admin-descr-full edit" cols="20" disabled>${ descrFull }</textarea>
+            </div>
+            <div class="product-admin-box price-icon" title="Ціна товару">
+                <textarea class="product-add-quan-sum edit" cols="20" disabled>${ price } ₴</textarea>
+            </div> 
+            <div class="product-admin-box" title="Редагувати товар">
+                <i class="fa-solid fa-pen-to-square edit-icon"></i>
+            </div>
+            <div class="product-admin-box" title="Видалити товар">
+                <img src="img/close.png" alt="" class="close-img">
+            </div>
+            <div class="product-admin-box save-btn-box" title="Видалити товар">
+                <button class="save-btn">Зберегти</button>
+            </div>
+        </div>`;
+
+    parent.insertAdjacentHTML('beforebegin', htmlAdmin); 	
+	
+	const file = document.querySelector("input[type='file']").files[0];
+
+	const formData = new FormData();
+	formData.append("image", file);
+
+	fetch("./img/products", {
+	  method: "POST",
+	  body: formData,
+	})
+	  .then((response) => {
+		if (response.ok) {
+		  // Файл успішно завантажений
+			const filename = response.headers.get("Content-Disposition").split("filename=")[1];
+			console.log(filename);
+		} else {
+		  // Помилка завантаження файлу
+		}
+	  })
+	  .catch((error) => {
+		// Помилка завантаження файлу
+	  });
+}
+
 export const saveLocalStorageAdmin = (products) => {
     localStorage.setItem('products', JSON.stringify(products));
+    const maxProduct = products.find((product) => product.id === Math.max(...products.map((product) => product.id)));
+	localStorage.setItem('maxProductId', maxProduct.id);
 };
 
 export const getsaveLocalStorageAdmin = () => {

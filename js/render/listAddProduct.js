@@ -1,8 +1,6 @@
 // import products from '../data/products.js';
-import { cart, quantity, updateCartQuantity, saveLocalStorage, getLocalStorage, addToCartHandler } from '../render/renderProduct.js';
+import { cart, quantity, updateCartQuantity, saveLocalStorage, getLocalStorage, addToCartHandler } from './renderProduct.js';
 import { getsaveLocalStorageAdmin } from './renderAdminProducts.js';
-
-console.log('123', cart);
 
 const products = getsaveLocalStorageAdmin();
 
@@ -36,8 +34,8 @@ export const renderCart = () => {
         block.setAttribute("id", cartItem.id);
         
         boxImg.className = `product-add-box`;
-        boxImg.innerHTML = `<img src="./img/products/${cartItem.img}" alt="" class="product-add-icon">`;
-
+        boxImg.innerHTML = `<img src="./img/products/${cartItem.img ? cartItem.img : 'noimg.webp'}" alt="" class="product-add-icon">`;
+        
         boxTitle.className = `product-add-box`;
         boxQuantity.className = `product-add-box`;
         boxSum.className = `product-add-box`;
@@ -166,3 +164,5 @@ function formatCartData() {
     });
     return formatData;
 }
+
+export { quantityAddProducts };

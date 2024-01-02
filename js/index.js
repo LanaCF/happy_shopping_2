@@ -1,9 +1,8 @@
 import products from './data/products.js';
-import { renderProduct } from './render/renderProduct.js';
+import { renderProduct, saveLocalStorage } from './render/renderProduct.js';
 import { renderCart } from './render/listAddProduct.js';
 import { renderLoginBtn } from './render/renderLoginBtn.js';
 import { getsaveLocalStorageAdmin, saveLocalStorageAdmin } from './render/renderAdminProducts.js';
-import { saveLocalStorage } from './render/renderProduct.js';
 
 if (localStorage.getItem("products") == null) { // ініціалізація списку товарів в localStorage
 	saveLocalStorageAdmin(products);
@@ -13,6 +12,7 @@ renderCart();
 renderLoginBtn();
 
 const productsLocal = getsaveLocalStorageAdmin();
+
 console.log('productsLocal:', productsLocal);
 
 for (let i = 0; i < productsLocal.length; i++) {

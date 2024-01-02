@@ -279,6 +279,11 @@ h3 {
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  width: 1200px;
+  margin: 0 auto;
 }
 
 .product {
@@ -405,6 +410,10 @@ h3 {
 
 .product-add-icon {
   width: 50px;
+  height: 100px;
+  padding: 5px;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .product-add-title {
