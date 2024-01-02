@@ -8,7 +8,7 @@ for (let i = 0; i < productsLocal.length; i++) {
     renderAdminProducts('.admin-products', productsLocal[i]);
 }
 
-const htmlAddBN = '<button class="add-btn">Додати товар</button>';
-document.querySelector('.admin-products').insertAdjacentHTML('beforeend', htmlAddBN);
+const htmlAddBN = '<button class="add-btn">Додати новий товар</button>';
+document.querySelector('.admin-products-new-btn').insertAdjacentHTML('beforeend', htmlAddBN);
 
-document.querySelector('.add-btn').addEventListener("click", addNewProduct('.add-btn'));
+document.querySelector('.add-btn').addEventListener("click", addNewProduct('.admin-products-new'));

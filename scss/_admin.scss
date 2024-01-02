@@ -4,9 +4,34 @@
     margin: 0 auto;
 }
 
-.admin-products {
+.admin-products,
+.admin-products-new {
     width: auto;
     padding: 25px;
+}
+
+.product-new-bgc {
+    background-color: rgb(241, 245, 248);
+}
+
+.admin-products-new-btn {
+    display: flex;
+    justify-content: end;
+}
+
+.add-btn {
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid rgb(29, 135, 197);
+    background-color: rgb(39, 103, 175);
+    color: white;
+    font-size: 21px;
+    transition: 0.3s;
+}
+
+.add-btn:hover {
+    background-color: rgb(80, 136, 201);
+    cursor: pointer;
 }
   
 .product-admin-block {

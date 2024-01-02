@@ -136,6 +136,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+
+
+
+
+
+
+
+
+
+
 export const addNewProduct = (selector) => {
     const parent = document.querySelector(selector);
     let { id, img, title, descrMini, descrFull, price } = '';
@@ -145,33 +156,27 @@ export const addNewProduct = (selector) => {
 	
     const htmlAdmin = 
         `<div class="product-admin-block" data-id="${ id }">
-            <div class="product-admin-box">
-                <input type="file">
+            <div class="product-admin-box product-new-bgc">
+                <input type="file" class="product-admin-icon">
             </div>
-            <div class="product-admin-box" title="Назва товару">
-                <textarea class="product-admin-title edit" cols="20" disabled>${ title }</textarea>
+            <div class="product-admin-box product-new-bgc" title="Назва товару">
+                <textarea class="product-admin-title edit" cols="20" placeholder="Назва товару" disabled></textarea>
             </div>
-            <div class="product-admin-box" title="Короткий опис товару">
-                <textarea class="product-admin-descr-mini edit" cols="20" disabled>${ descrMini }</textarea>
+            <div class="product-admin-box product-new-bgc" title="Короткий опис товару">
+                <textarea class="product-admin-descr-mini edit" cols="20" placeholder="Короткий опис товару" disabled></textarea>
             </div>
-            <div class="product-admin-box" title="Повний опис товару">
-                <textarea class="product-admin-descr-full edit" cols="20" disabled>${ descrFull }</textarea>
+            <div class="product-admin-box product-new-bgc" title="Повний опис товару">
+                <textarea class="product-admin-descr-full edit" cols="20" placeholder="Повний опис товару" disabled></textarea>
             </div>
-            <div class="product-admin-box price-icon" title="Ціна товару">
-                <textarea class="product-add-quan-sum edit" cols="20" disabled>${ price } ₴</textarea>
-            </div> 
-            <div class="product-admin-box" title="Редагувати товар">
-                <i class="fa-solid fa-pen-to-square edit-icon"></i>
-            </div>
-            <div class="product-admin-box" title="Видалити товар">
-                <img src="img/close.png" alt="" class="close-img">
+            <div class="product-admin-box product-new-bgc price-icon" title="Ціна товару">
+                <textarea class="product-add-quan-sum edit" cols="20" disabled>₴</textarea>
             </div>
             <div class="product-admin-box save-btn-box" title="Видалити товар">
                 <button class="save-btn">Зберегти</button>
             </div>
         </div>`;
 
-    parent.insertAdjacentHTML('beforebegin', htmlAdmin); 	
+    parent.insertAdjacentHTML('beforeend', htmlAdmin); 	
 	
 	const file = document.querySelector("input[type='file']").files[0];
 
