@@ -5,7 +5,7 @@ import { renderLoginBtn } from './render/renderLoginBtn.js';
 import { getsaveLocalStorageAdmin, saveLocalStorageAdmin } from './render/renderAdminProducts.js';
 
 if (localStorage.getItem("products") == null) { // ініціалізація списку товарів в localStorage
-	saveLocalStorageAdmin(products);
+	saveLocalStorageAdmin(products, products[products.length-1]);
 }
 
 renderCart();

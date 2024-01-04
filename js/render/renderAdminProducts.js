@@ -57,87 +57,85 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const editIcons = document.querySelectorAll('.edit-icon');
 
-    editIcons.forEach(function(editIcon) {
-        editIcon.addEventListener('click', function() {
-            const productAdminBlock = this.closest('.product-admin-block');
-            const saveBtn = productAdminBlock.querySelector('.save-btn');
-            const editAreas = productAdminBlock.querySelectorAll('.edit');
-            
-            saveBtn.style.display = 'initial';
-
-            editAreas.forEach(function(textarea) {
-                textarea.removeAttribute('disabled');
-                textarea.style.border = '1px solid silver';
-            });
-            
-            saveBtn.addEventListener('click', function() {
-                saveBtn.style.display = 'none';
-
-                editAreas.forEach(function(textarea) {
-                    textarea.setAttribute('disabled', true);
-                    textarea.style.border = 'none';
-                    const products = getsaveLocalStorageAdmin();
-
-                    const productId = parseInt(productAdminBlock.getAttribute('data-id'), 10);
-                    const productData = products.find(product => product.id === productId);
-                    
-                    // Оновити масив products
-                    const index = products.findIndex(item => item.id === productData.id);
-                    
-                    if (index !== -1) {
-                        products[index].title = productAdminBlock.querySelector('.product-admin-title').value;
-                        products[index].descrMini = productAdminBlock.querySelector('.product-admin-descr-mini').value;
-                        products[index].descrFull = productAdminBlock.querySelector('.product-admin-descr-full').value;
-                        const priceV = productAdminBlock.querySelector('.product-add-quan-sum').value;
-						products[index].price = parseInt(priceV.slice(0, priceV.length - 2));
-                    }
-        
-                    saveLocalStorageAdmin(products);
-                });
-
-                renderAdminProducts('.admin-products', products);
-            });
-        });
-    });
+    editIcons.forEach((editIcon) => editIcon.addEventListener('click', onEditIconClick));
 
     const delIcon = document.querySelectorAll('.del-icon');
-
-    delIcon.forEach(function(del) {
-        del.addEventListener('click', function() {
-            const productAdminBlock = this.closest('.product-admin-block');
-            const products = getsaveLocalStorageAdmin();
-            const productIdToDel = parseInt(productAdminBlock.getAttribute('data-id'), 10);
-            const indexToDelete = products.findIndex(product => product.id === productIdToDel);
-            let sumAdd = 0;
-            let cart = JSON.parse(localStorage.getItem('cart'));
-            cart.forEach(function(item) {
-                if (item.id === productIdToDel) {
-                sumAdd += 1;
-                }
-            });
-            const quantityToRemove = sumAdd;
-
-            for (let i = 0; i < quantityToRemove; i++) {
-                const indexToRemove = cart.findIndex(product => product.id === productIdToDel);
-        
-                if (indexToRemove !== -1) {
-                    cart.splice(indexToRemove, 1);
-                }
-            }
-
-            if (indexToDelete !== -1) {
-                products.splice(indexToDelete, 1);
-            }
-            
-            //updateCartQuantity(cart.length);
-            //saveLocalStorage();
-            localStorage.setItem('cart', JSON.stringify(cart));
-            localStorage.setItem('cartLength', String(cart.length));
-            saveLocalStorageAdmin(products);
-            productAdminBlock.remove();
-        });
-    }); 
+    delIcon.forEach((delIcon) => delIcon.addEventListener('click', onDelIconClick));
 });
+
+const onEditIconClick = function() {
+	const productAdminBlock = this.closest('.product-admin-block');
+	const saveBtn = productAdminBlock.querySelector('.save-btn');
+	const editAreas = productAdminBlock.querySelectorAll('.edit');
+
+	saveBtn.style.display = 'initial';
+
+	editAreas.forEach(function(textarea) {
+		textarea.removeAttribute('disabled');
+		textarea.style.border = '1px solid silver';
+	});
+			
+	saveBtn.addEventListener('click', function() {
+		saveBtn.style.display = 'none';
+		const products = getsaveLocalStorageAdmin();
+		editAreas.forEach(function(textarea) {
+			textarea.setAttribute('disabled', true);
+			textarea.style.border = 'none';
+
+			const productId = parseInt(productAdminBlock.getAttribute('data-id'), 10);
+			const productData = products.find(product => product.id === productId);
+					
+			// Оновити масив products
+			const index = products.findIndex(item => item.id === productData.id);
+					
+			if (index !== -1) {
+				products[index].title = productAdminBlock.querySelector('.product-admin-title').value;
+				products[index].descrMini = productAdminBlock.querySelector('.product-admin-descr-mini').value;
+				products[index].descrFull = productAdminBlock.querySelector('.product-admin-descr-full').value;
+				const priceV = productAdminBlock.querySelector('.product-add-quan-sum').value;
+				products[index].price = parseInt(priceV.slice(0, priceV.length - 2));
+			}
+		
+			saveLocalStorageAdmin(products, parseInt(localStorage.getItem('maxProductId')));
+		});
+
+		// renderAdminProducts('.admin-products', products[products.length-1]);
+	});
+};
+
+const onDelIconClick = function() {
+	const productAdminBlock = this.closest('.product-admin-block');
+	const products = getsaveLocalStorageAdmin();
+	const productIdToDel = parseInt(productAdminBlock.getAttribute('data-id'), 10);
+	const indexToDelete = products.findIndex(product => product.id === productIdToDel);
+	let sumAdd = 0;
+	let cart = JSON.parse(localStorage.getItem('cart'));
+	cart.forEach(function(item) {
+		if (item.id === productIdToDel) {
+			sumAdd += 1;
+			}
+		});
+	 const quantityToRemove = sumAdd;
+
+	for (let i = 0; i < quantityToRemove; i++) {
+		const indexToRemove = cart.findIndex(product => product.id === productIdToDel);
+		
+		if (indexToRemove !== -1) {
+			cart.splice(indexToRemove, 1);
+		}
+	}
+
+	if (indexToDelete !== -1) {
+		products.splice(indexToDelete, 1);
+	}
+			
+			//updateCartQuantity(cart.length);
+			//saveLocalStorage();
+	localStorage.setItem('cart', JSON.stringify(cart));
+	localStorage.setItem('cartLength', String(cart.length));
+	saveLocalStorageAdmin(products, parseInt(localStorage.getItem('maxProductId')));
+	productAdminBlock.remove();
+}
 
 export const addNewProduct = (selector) => {
     const parentEl = document.querySelector(selector);
@@ -173,6 +171,7 @@ export const addNewProduct = (selector) => {
 
     addBtn.addEventListener("click", function() {
         const products = getsaveLocalStorageAdmin();
+        const newProdBlock = document.querySelector('.product-admin-block-new');
         const newProdImg = document.querySelector('.product-admin-icon');
         const newProdTitle = document.querySelector('.product-admin-title');
         const newProdDescrMini = document.querySelector('.product-admin-descr-mini');
@@ -189,9 +188,15 @@ export const addNewProduct = (selector) => {
         };    
 
         products.push(newArrProd);
-        saveLocalStorageAdmin(products);
+        saveLocalStorageAdmin(products, parseInt(localStorage.getItem('maxProductId')) + 1);
         renderAdminProducts('.admin-products', products[products.length-1]);
+        const editIcons = document.querySelectorAll('.edit-icon');
+		const delIcons = document.querySelectorAll('.del-icon');
+		// Додаємо обробник кліка до кожного елемента
+		editIcons[editIcons.length-1].addEventListener('click', onEditIconClick);
+		delIcons[delIcons.length-1].addEventListener('click', onDelIconClick);
 
+        newProdBlock.dataset.id = parseInt(localStorage.getItem('maxProductId')) + 1;
         newProdImg.value = '';
         newProdTitle.value = '';
         newProdDescrMini.value = '';
@@ -200,10 +205,14 @@ export const addNewProduct = (selector) => {
     });  
 }
 
-export const saveLocalStorageAdmin = (products) => {
+export const saveLocalStorageAdmin = (products, maxId) => {
     localStorage.setItem('products', JSON.stringify(products));
-    const maxProduct = products.find((product) => product.id === Math.max(...products.map((product) => product.id)));
-	localStorage.setItem('maxProductId', maxProduct.id);
+    if (localStorage.getItem("maxProductId") == null) {
+		const maxProduct = products.find((product) => product.id === Math.max(...products.map((product) => product.id)));
+		localStorage.setItem('maxProductId', maxProduct.id);
+	} else {
+		localStorage.setItem('maxProductId', maxId);
+	}
 };
 
 export const getsaveLocalStorageAdmin = () => {
