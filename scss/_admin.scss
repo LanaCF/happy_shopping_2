@@ -10,22 +10,18 @@
     padding: 25px;
 }
 
-.product-new-bgc {
-    background-color: rgb(241, 245, 248);
-}
-
 .admin-products-new-btn {
     display: flex;
     justify-content: end;
 }
 
 .add-btn {
-    padding: 15px;
+    padding: 10px;
     border-radius: 15px;
     border: 1px solid rgb(29, 135, 197);
     background-color: rgb(39, 103, 175);
     color: white;
-    font-size: 21px;
+    font-size: 15px;
     transition: 0.3s;
 }
 
@@ -33,10 +29,16 @@
     background-color: rgb(80, 136, 201);
     cursor: pointer;
 }
-  
+
 .product-admin-block {
     display: flex;
     height: 250px;
+    width: 100%;
+}
+
+.product-admin-block-new {
+    display: flex;
+    height: 100%;
     width: 100%;
 }
 
@@ -46,6 +48,15 @@
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid rgba(192, 192, 192, 0.307);
+}
+
+.product-admin-box-new {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(192, 192, 192, 0.307);
+    background-color: rgb(241, 245, 248);
 }
 
 .product-admin-icon {

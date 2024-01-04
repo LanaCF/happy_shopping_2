@@ -2,6 +2,8 @@
 //import { cart, quantity, updateCartQuantity, saveLocalStorage, getLocalStorage, addToCartHandler } from './renderProduct.js';
 //import { quantityAddProducts } from './listAddProduct.js';
 
+// import products from "../data/products";
+
 export const renderAdminProducts = (selector, data) => {
     getsaveLocalStorageAdmin();
 
@@ -59,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
         editIcon.addEventListener('click', function() {
             const productAdminBlock = this.closest('.product-admin-block');
             const saveBtn = productAdminBlock.querySelector('.save-btn');
-            const editAreas = productAdminBlock.querySelectorAll('.edit');  // Оновлено: Змінено назву для уникнення конфлікту імен
+            const editAreas = productAdminBlock.querySelectorAll('.edit');
             
             saveBtn.style.display = 'initial';
 
@@ -91,8 +93,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
         
                     saveLocalStorageAdmin(products);
-                    renderAdminProducts('.admin-products', products);
                 });
+
+                renderAdminProducts('.admin-products', products);
             });
         });
     });
@@ -125,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (indexToDelete !== -1) {
                 products.splice(indexToDelete, 1);
             }
-            console.log('del', products);
+            
             //updateCartQuantity(cart.length);
             //saveLocalStorage();
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -133,72 +136,68 @@ document.addEventListener('DOMContentLoaded', function() {
             saveLocalStorageAdmin(products);
             productAdminBlock.remove();
         });
-    });
+    }); 
 });
 
-
-
-
-
-
-
-
-
-
-
-
 export const addNewProduct = (selector) => {
-    const parent = document.querySelector(selector);
+    const parentEl = document.querySelector(selector);
     let { id, img, title, descrMini, descrFull, price } = '';
-    
-	const imgName = img ? img : 'noimg.webp';
+    const imgName = img ? img : 'noimg.webp';
     id = parseInt(localStorage.getItem('maxProductId')) + 1;
-	
+    
     const htmlAdmin = 
-        `<div class="product-admin-block" data-id="${ id }">
-            <div class="product-admin-box product-new-bgc">
-                <input type="file" class="product-admin-icon">
+        `<div class="product-admin-block-new" data-id="${ id }">
+            <div class="product-admin-box-new">
+                <textarea class="product-admin-icon" cols="20" placeholder="Введіть назву файлу та розширення: p1.webp"></textarea>
             </div>
-            <div class="product-admin-box product-new-bgc" title="Назва товару">
-                <textarea class="product-admin-title edit" cols="20" placeholder="Назва товару" disabled></textarea>
+            <div class="product-admin-box-new" title="Назва товару">
+                <textarea class="product-admin-title" cols="20" placeholder="Назва товару"></textarea>
             </div>
-            <div class="product-admin-box product-new-bgc" title="Короткий опис товару">
-                <textarea class="product-admin-descr-mini edit" cols="20" placeholder="Короткий опис товару" disabled></textarea>
+            <div class="product-admin-box-new" title="Короткий опис товару">
+                <textarea class="product-admin-descr-mini" cols="20" placeholder="Короткий опис товару"></textarea>
             </div>
-            <div class="product-admin-box product-new-bgc" title="Повний опис товару">
-                <textarea class="product-admin-descr-full edit" cols="20" placeholder="Повний опис товару" disabled></textarea>
+            <div class="product-admin-box-new" title="Повний опис товару">
+                <textarea class="product-admin-descr-full" cols="20" placeholder="Повний опис товару"></textarea>
             </div>
-            <div class="product-admin-box product-new-bgc price-icon" title="Ціна товару">
-                <textarea class="product-add-quan-sum edit" cols="20" disabled>₴</textarea>
+            <div class="product-admin-box-new price-icon" title="Ціна товару">
+                <textarea class="product-add-quan-sum" cols="20" placeholder="Ціна товару"></textarea>
             </div>
-            <div class="product-admin-box save-btn-box" title="Видалити товар">
-                <button class="save-btn">Зберегти</button>
+            <div class="product-admin-box-new">
+                <button class="add-btn">Додати новий <br> товар</button>
             </div>
         </div>`;
 
-    parent.insertAdjacentHTML('beforeend', htmlAdmin); 	
-	
-	const file = document.querySelector("input[type='file']").files[0];
+    parentEl.insertAdjacentHTML('beforeend', htmlAdmin); 
 
-	const formData = new FormData();
-	formData.append("image", file);
+    const addBtn = document.querySelector('.add-btn');
 
-	fetch("./img/products", {
-	  method: "POST",
-	  body: formData,
-	})
-	  .then((response) => {
-		if (response.ok) {
-		  // Файл успішно завантажений
-			const filename = response.headers.get("Content-Disposition").split("filename=")[1];
-			console.log(filename);
-		} else {
-		  // Помилка завантаження файлу
-		}
-	  })
-	  .catch((error) => {
-		// Помилка завантаження файлу
-	  });
+    addBtn.addEventListener("click", function() {
+        const products = getsaveLocalStorageAdmin();
+        const newProdImg = document.querySelector('.product-admin-icon');
+        const newProdTitle = document.querySelector('.product-admin-title');
+        const newProdDescrMini = document.querySelector('.product-admin-descr-mini');
+        const newProdDescrFull = document.querySelector('.product-admin-descr-full');
+        const newProdPrice = document.querySelector('.product-add-quan-sum');
+
+        let newArrProd = { 
+            id: id, 
+            title: newProdTitle.value, 
+            img: newProdImg.value, 
+            price: newProdPrice.value,
+            descrMini: newProdDescrMini.value,
+            descrFull: newProdDescrFull.value
+        };    
+
+        products.push(newArrProd);
+        saveLocalStorageAdmin(products);
+        renderAdminProducts('.admin-products', products[products.length-1]);
+
+        newProdImg.value = '';
+        newProdTitle.value = '';
+        newProdDescrMini.value = '';
+        newProdDescrFull.value = '';
+        newProdPrice.value = '';
+    });  
 }
 
 export const saveLocalStorageAdmin = (products) => {
@@ -219,15 +218,48 @@ export const getsaveLocalStorageAdmin = () => {
 
 
 
+// function imgAdd() {
+//     const fileInput = document.querySelector("input[type='file']");
+//     const imgPreview = document.querySelector(".product-preview"); // Припустимо, що ви хочете відобразити попередній перегляд у відповідному елементі
 
-// export const saveLocalStorageAdmin = (data) => {
+//     fileInput.addEventListener("change", function() {
+//         const file = this.files[0];
 
-//     // Отримати збережені дані з локального сховища
-//     // const storedData = getsaveLocalStorageAdmin();
+//         if (file) {
+//             const reader = new FileReader();
 
-//     // // Замінити старі дані на нові в масиві
-//     // const updatedData = storedData.map(item => (item.id === data.id ? data : item));
+//             reader.addEventListener("load", function() {
+//                 const imageUrl = reader.result;
+//                 imgPreview.src = imageUrl;
 
-//     // Збереження оновлених даних в локальному сховищі
-//     localStorage.setItem('products', JSON.stringify(products));
-// };
+//                 // Тут ви можете використовувати imageUrl для відображення попереднього перегляду або використання в іншій логіці
+//             });
+
+//             reader.readAsDataURL(file);
+//         }
+//     });
+// }
+
+// function imgAdd() {
+//     const fileInput = document.querySelector("input[type='file']");
+//     const file = fileInput.files[0];
+
+//     const formData = new FormData();
+//     formData.append("image", file);
+
+//     fetch("./img/products", {
+//       method: "POST",
+//       body: formData,
+//     }).then((response) => {
+//         if (response.ok) {
+//           // Файл успішно завантажений
+//             const filename = file.name; // Отримати тільки ім'я файлу
+//             console.log(filename);
+//         } else {
+//           // Помилка завантаження файлу
+//         }
+//       })
+//     .catch((error) => {
+//     // Помилка завантаження файлу
+//     });
+// }
