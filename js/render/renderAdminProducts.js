@@ -178,8 +178,10 @@ export const addNewProduct = (selector) => {
         const newProdDescrFull = document.querySelector('.product-admin-descr-full');
         const newProdPrice = document.querySelector('.product-add-quan-sum');
 
-        let newArrProd = { 
-            id: id, 
+                    const currentMaxProductId = parseInt(localStorage.getItem('maxProductId')) || 0;
+
+        const newArrProd = { 
+            id: currentMaxProductId + 1, 
             title: newProdTitle.value, 
             img: newProdImg.value, 
             price: newProdPrice.value,
@@ -188,7 +190,8 @@ export const addNewProduct = (selector) => {
         };    
 
         products.push(newArrProd);
-        saveLocalStorageAdmin(products, parseInt(localStorage.getItem('maxProductId')) + 1);
+        saveLocalStorageAdmin(products, currentMaxProductId + 1);
+        localStorage.setItem('maxProductId', currentMaxProductId + 1);
         renderAdminProducts('.admin-products', products[products.length-1]);
         const editIcons = document.querySelectorAll('.edit-icon');
 		const delIcons = document.querySelectorAll('.del-icon');
@@ -196,7 +199,7 @@ export const addNewProduct = (selector) => {
 		editIcons[editIcons.length-1].addEventListener('click', onEditIconClick);
 		delIcons[delIcons.length-1].addEventListener('click', onDelIconClick);
 
-        newProdBlock.dataset.id = parseInt(localStorage.getItem('maxProductId')) + 1;
+        newProdBlock.dataset.id = currentMaxProductId + 1;
         newProdImg.value = '';
         newProdTitle.value = '';
         newProdDescrMini.value = '';
@@ -225,7 +228,7 @@ export const getsaveLocalStorageAdmin = () => {
 
 
 
-
+git
 
 // function imgAdd() {
 //     const fileInput = document.querySelector("input[type='file']");

@@ -1,8 +1,14 @@
+// import { shopConfig } from './config/headerConfig.js';
+// import { headerParts } from './parts/headerParts.js';
+// import { renderHeader } from './render/renderHeader.js';
+
 import products from './data/products.js';
 import { renderProduct, saveLocalStorage } from './render/renderProduct.js';
 import { renderCart } from './render/listAddProduct.js';
 import { renderLoginBtn } from './render/renderLoginBtn.js';
 import { getsaveLocalStorageAdmin, saveLocalStorageAdmin } from './render/renderAdminProducts.js';
+
+// renderHeader(shopConfig, headerParts);
 
 if (localStorage.getItem("products") == null) { // ініціалізація списку товарів в localStorage
 	saveLocalStorageAdmin(products, products[products.length-1]);

@@ -1,5 +1,10 @@
 // import products from './data/products.js';
 import { renderAdminProducts, getsaveLocalStorageAdmin, saveLocalStorageAdmin, addNewProduct } from "./render/renderAdminProducts.js";
+import { adminConfig } from "./config/headerConfig.js";
+import { headerParts } from "./parts/headerParts.js";
+import { renderHeader } from "./render/renderHeader.js";
+
+renderHeader(adminConfig, headerParts);
 
 const productsLocal = getsaveLocalStorageAdmin();
 console.log('In Admin productsLocal:', productsLocal);

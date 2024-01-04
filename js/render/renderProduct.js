@@ -1,7 +1,12 @@
 // import products from '../data/products.js';
 import { getsaveLocalStorageAdmin } from './renderAdminProducts.js';
+import { shopConfig } from '../config/headerConfig.js';
+import { headerParts } from '../parts/headerParts.js';
+import { renderHeader } from './renderHeader.js';
 
 const products = getsaveLocalStorageAdmin();
+
+renderHeader(shopConfig, headerParts);
 
 const quantity = document.querySelector('.quantity');
 let cart = [];
