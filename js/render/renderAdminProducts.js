@@ -228,8 +228,6 @@ export const getsaveLocalStorageAdmin = () => {
 
 
 
-git
-
 // function imgAdd() {
 //     const fileInput = document.querySelector("input[type='file']");
 //     const imgPreview = document.querySelector(".product-preview"); // Припустимо, що ви хочете відобразити попередній перегляд у відповідному елементі
